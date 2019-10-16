@@ -1,0 +1,25 @@
+body{
+    background: #efefef;
+}
+
+.main{
+    background: white;
+    margin: 35px;
+    padding: 20px;
+}
+
+.btn-submit{
+    float: right;
+    margin-bottom: 15px;
+}
+
+.media-object{
+    height: 42px;
+    width: 42px;
+}
+
+.text-des{
+    font-size: 12px;
+    font-weight: normal;
+    color: #999;
+}

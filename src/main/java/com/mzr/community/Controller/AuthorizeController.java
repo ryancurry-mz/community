@@ -1,20 +1,18 @@
 package com.mzr.community.controller;
 
-import com.mzr.community.Mapper.UserMapper;
+import com.mzr.community.mapper.UserMapper;
 import com.mzr.community.dto.AccessTokenDTO;
 import com.mzr.community.dto.GithubUser;
 import com.mzr.community.model.User;
 import com.mzr.community.provider.GithubProvider;
-import org.apache.ibatis.annotations.Mapper;
-import org.omg.CORBA.ServerRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 
 @Controller
@@ -35,7 +33,7 @@ public class AuthorizeController {
     @GetMapping("/callback")
     public String authorize(@RequestParam(value = "code")String code,
                             @RequestParam(value = "state")String state,
-                            HttpServletRequest req){
+                            HttpServletResponse resp){
         AccessTokenDTO accessTokenDTO = new AccessTokenDTO();
         accessTokenDTO.setClient_id(clientId);
         accessTokenDTO.setClient_secret(clientSecret);
@@ -44,18 +42,20 @@ public class AuthorizeController {
         accessTokenDTO.setState(state);
         String accessToken = githubProvider.getAccessToken(accessTokenDTO);
         GithubUser githubUser = githubProvider.getUser(accessToken);
-//        System.out.println(user.getName() + " " + user.getId() + " " + user.getBio());
+
         if(githubUser != null){
             User user = new User();
             user.setName(githubUser.getName());
-            user.setToken(UUID.randomUUID().toString());
+            String token = UUID.randomUUID().toString();
+            user.setToken(token);
             user.setAccountId(String.valueOf(githubUser.getId()));
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtCreate());
-            System.out.println(user);
+            user.setAvatarUrl(githubUser.getAvatar_url());
+            System.out.println(githubUser);
             userMapper.insUser(user);
             //登陆成功，写session和cookie
-            req.getSession().setAttribute("user",githubUser);
+            resp.addCookie(new Cookie("token",token));
             return "redirect:/";
         }else{
             //登录失败
