@@ -4,22 +4,34 @@ import com.mzr.community.mapper.QuestionMapper;
 import com.mzr.community.mapper.UserMapper;
 import com.mzr.community.model.Question;
 import com.mzr.community.model.User;
+import com.mzr.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class PublishController {
     @Autowired
     private UserMapper userMapper;
+
     @Autowired
-    private QuestionMapper questionMapper;
+    private QuestionService questionService;
+
+    @GetMapping("/publish/{id}")
+    public String edit(@PathVariable(name = "id")Integer id,Model model){
+        Question question = questionService.question(id);
+        model.addAttribute("title",question.getTitle());
+        model.addAttribute("details",question.getDetails());
+        model.addAttribute("tag",question.getTag());
+        model.addAttribute("id",question.getId());
+        return "publish";
+    }
 
     @GetMapping("/publish")
     public String publish(){
@@ -27,10 +39,11 @@ public class PublishController {
     }
 
     @PostMapping("/publish")
-    public String dopublish(
-            @RequestParam("title")String title,
-            @RequestParam("details")String details,
-            @RequestParam("tag")String tag,
+    public String doPublish(
+            @RequestParam(value = "title",required = false)String title,
+            @RequestParam(value = "details",required = false)String details,
+            @RequestParam(value = "tag",required = false)String tag,
+            @RequestParam(value = "id",required = false)Integer id,
             HttpServletRequest req,
             Model model){
 
@@ -45,10 +58,9 @@ public class PublishController {
         question.setDetails(details);
         question.setTag(tag);
         question.setCreator(user.getId());
-        question.setGmtCreate(System.currentTimeMillis());
-        question.setGmtModified(question.getGmtCreate());
+        question.setId(id);
 
-        questionMapper.create(question);
+        questionService.createOrupdate(question);
         return "redirect:/";
     }
 }

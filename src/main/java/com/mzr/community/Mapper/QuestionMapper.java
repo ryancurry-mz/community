@@ -12,6 +12,12 @@ public interface QuestionMapper {
     @Insert("insert into question values(default,#{title},#{details},#{gmtCreate},#{gmtModified},#{creator},default,default,default,#{tag})")
     void create(Question question);
 
-    @Select({"select question.*,`user`.avatar_url from question,`user` where question.creator = `user`.id"})
+    @Select("select question.*,`user`.avatar_url from question,`user` where question.creator = `user`.id")
     List<Question> list();
+
+    @Select("select * from question where id = #{id}")
+    Question question(@Param("id") Integer id);
+
+    @Update("update question set title=#{title},details=#{details},gmt_modified=#{gmtModified},tag=#{tag} where id = #{id}")
+    void update(Question question);
 }
