@@ -1,29 +1,37 @@
 package com.mzr.community.controller;
 
-import com.mzr.community.dto.CommentDTO;
 import com.mzr.community.mapper.CommentMapper;
+import com.mzr.community.mapper.QuestionMapper;
 import com.mzr.community.model.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class CommentController {
     @Autowired
     private CommentMapper commentMapper;
+    @Autowired
+    private QuestionMapper questionMapper;
 
-    @RequestMapping(value = "/comment",method = RequestMethod.POST)
-    public Object post(@RequestBody CommentDTO commentDTO){
+    @PostMapping("/comment")
+    public String post(@RequestParam String content,
+                       @RequestParam Integer commentator,
+                       @RequestParam Long question_id){
         Comment comment = new Comment();
-        comment.setParentId(commentDTO.getParentId());
-        comment.setContent(commentDTO.getContent());
-        comment.setCommentator(1);
+        comment.setType(1);
+        comment.setParentId(question_id);
         comment.setGmtCreate(System.currentTimeMillis());
         comment.setGmtModified(comment.getGmtCreate());
-        comment.setType(commentDTO.getType());
+        comment.setCommentator(commentator);
+        comment.setContent(content);
+        comment.setLikeCount(0L);
         commentMapper.insert(comment);
-        return "/question";
+        int id = Integer.parseInt(String.valueOf(question_id));
+        questionMapper.inComment(id);
+        return "redirect:/question/" + question_id;
     }
 }
+
+

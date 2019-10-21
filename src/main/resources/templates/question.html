@@ -27,6 +27,31 @@
             <a th:href="@{'/publish/' + ${question.id}}" class="community-menu" th:if="${session.user !=null && session.user.id == question.creator}">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true">编辑</span>
             </a>
+
+            <hr>
+            <h3><span th:text="评论"></span></h3>
+            <div class="media" th:each="comment : ${comments}">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object img-rounded" src="https://avatars1.githubusercontent.com/u/56419382?v=4">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <p th:text="${comment.content}"></p>
+                    <span class="text-des"><span th:text="${#dates.format(question.getGmtCreate(), 'yyyy-MM-dd HH:mm')}"></span></span>
+                    <span th:if="${session.user != null}"><a th:href="@{'/delComment/' + ${comment.parentId}}">删除</a></span>
+                </div>
+            </div>
+            <hr>
+            <form action="/comment" method="post" th:if="${session.user != null}">
+                <input type="hidden" name="commentator" th:value="${session.user.id}">
+                <input type="hidden" name="question_id" th:value="${question.id}">
+                <div class="form-group">
+                    <label for="content" style="font-size: 20px;">发表评论：</label>
+                    <textarea class="form-control" rows="10" id="content" name="content" placeholder="评论一下.."></textarea>
+                </div>
+                <button type="submit" class="btn btn-success btn-submit"> 确定 </button>
+            </form>
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">

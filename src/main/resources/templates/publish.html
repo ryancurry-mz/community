@@ -31,7 +31,7 @@
                     <label for="tag">添加标签:</label>
                     <input type="text" class="form-control" id="tag" name="tag" placeholder="创建或搜索新话题.." th:value="${tag}">
                 </div>
-                <p th:text="${error}"></p>
+                <p style="color: red;" th:text="${error}"></p>
                 <button type="submit" class="btn btn-success btn-submit"> 发布 </button>
             </form>
         </div>
