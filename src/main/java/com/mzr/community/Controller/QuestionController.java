@@ -24,6 +24,7 @@ public class QuestionController {
         Question question = questionMapper.question(id);
         User user = userMapper.findById(question.getCreator());
         question.setUser(user);
+        questionMapper.inView(question.getId());
         model.addAttribute("question",question);
         return "question";
     }
