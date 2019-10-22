@@ -1,0 +1,20 @@
+2019-10-22 10:22:40.175 DEBUG 7800 --- [http-nio-8081-exec-1] c.m.c.mapper.UserMapper.findByToken      : ==>  Preparing: select * from user where token = ? 
+2019-10-22 10:22:40.177 DEBUG 7800 --- [http-nio-8081-exec-1] c.m.c.mapper.UserMapper.findByToken      : ==> Parameters: de48a941-cd24-4583-81fc-ccd2416dd709(String)
+2019-10-22 10:22:40.200 DEBUG 7800 --- [http-nio-8081-exec-1] c.m.c.mapper.UserMapper.findByToken      : <==      Total: 1
+2019-10-22 10:22:40.205 DEBUG 7800 --- [http-nio-8081-exec-1] c.m.c.mapper.QuestionMapper.list_COUNT   : ==>  Preparing: SELECT count(0) FROM question, `user` WHERE question.creator = `user`.id 
+2019-10-22 10:22:40.205 DEBUG 7800 --- [http-nio-8081-exec-1] c.m.c.mapper.QuestionMapper.list_COUNT   : ==> Parameters: 
+2019-10-22 10:22:40.242 DEBUG 7800 --- [http-nio-8081-exec-1] c.m.c.mapper.QuestionMapper.list_COUNT   : <==      Total: 1
+2019-10-22 10:22:40.243 DEBUG 7800 --- [http-nio-8081-exec-1] c.m.c.mapper.QuestionMapper.list         : ==>  Preparing: select question.*,`user`.avatar_url from question,`user` where question.creator = `user`.id LIMIT ? 
+2019-10-22 10:22:40.243 DEBUG 7800 --- [http-nio-8081-exec-1] c.m.c.mapper.QuestionMapper.list         : ==> Parameters: 8(Integer)
+2019-10-22 10:22:40.249 DEBUG 7800 --- [http-nio-8081-exec-1] c.m.c.mapper.QuestionMapper.list         : <==      Total: 8
+2019-10-22 10:23:12.261  INFO 7800 --- [restartedMain] com.mzr.community.CommunityApplication   : Starting CommunityApplication on PC-201909011950 with PID 7800 (started by Administrator in H:\IDEA WorkSpace\community)
+2019-10-22 10:23:12.269  INFO 7800 --- [restartedMain] com.mzr.community.CommunityApplication   : No active profile set, falling back to default profiles: default
+2019-10-22 10:23:13.825  INFO 7800 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
+2019-10-22 10:23:13.826  INFO 7800 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-10-22 10:23:13.827  INFO 7800 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.26]
+2019-10-22 10:23:13.911  INFO 7800 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-10-22 10:23:13.911  INFO 7800 --- [restartedMain] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1636 ms
+2019-10-22 10:23:14.776  INFO 7800 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2019-10-22 10:23:14.859  INFO 7800 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path ''
+2019-10-22 10:23:14.860  INFO 7800 --- [restartedMain] com.mzr.community.CommunityApplication   : Started CommunityApplication in 2.668 seconds (JVM running for 799.947)
+2019-10-22 10:23:14.874  INFO 7800 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged

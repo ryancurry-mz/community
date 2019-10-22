@@ -29,7 +29,10 @@
             </div>
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-            <h2>热门话题</h2>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                 <h2>站长微信</h2>
+                 <img src="/static/images/wechat.jpg" style="width: 60%;height: 70%;"/>
+            </div>
         </div>
     </div>
 </div>
@@ -53,5 +56,6 @@
         <span>当前 <span th:text="${questions.pageNum}"></span> 页,总 <span th:text="${questions.pages}"></span> 页,共 <span th:text="${questions.total}"></span> 条记录</span>
     </center>
 </div>
+<div th:insert="~{footer :: foot}"></div>
 </body>
 </html>
