@@ -1,4 +1,10 @@
-## mzr
+## 简易的社区系统
+
+## 环境
+- JDK版本：JDK 1.8
+- 构建工具：maven 3.6.1
+- IDE：IDEA	 2019.2
+- 数据库：mysql 11.1.13
 
 ## 资料
 [Spring文档](https://spring.io/guides)
